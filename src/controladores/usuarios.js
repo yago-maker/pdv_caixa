@@ -2,7 +2,7 @@ const knex = require('knex');
 const conexaoDB = require('../config/conexaoDB')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const senhaHash = require('./verificaLogin');
+const senhaHash = require('../intermediarios/verificaLogin');
 
 
 const cadastrarUsuario = async (req, res) => {
