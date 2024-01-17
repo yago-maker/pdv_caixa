@@ -25,7 +25,7 @@ const cadastrar = async (req, res) => {
         return res.status(200).json(novoUsuario)
 
     } catch (error) {
-        console.log(error)
+
         return res.status(500).json({ mensagem: "Erro interno do servidor" })
     }
 }
