@@ -6,7 +6,7 @@ rotas.get('/', async (request, response) => {
 	response.status(200).json('Funcionando');
 })
 
-rotas.get('./usuarios', cadastrarUsuario)
+rotas.post('/usuarios', cadastrarUsuario)
 
 
 module.exports = rotas

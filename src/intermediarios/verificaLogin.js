@@ -1,7 +1,6 @@
 const knex = require('knex')
 const jwt = require('jsonwebtoken')
-const senhaJwt = require('../senhaJwt')
-const pool = require('../config/conexaoDB');
+const senhaJwt = process.env.JWTPASS
 
 const verificaLogin = async (req, res, next) => {
     const { authorization } = req.headers;
