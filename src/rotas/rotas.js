@@ -8,8 +8,6 @@ rotas.get('/', async (request, response) => {
 	response.status(200).json('Funcionando');
 })
 
-
-
 app.put("/usuario", verificaLogin, atualizarUsuario);
 
 module.exports = rotas
