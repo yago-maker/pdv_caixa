@@ -1,13 +1,13 @@
 const express = require('express');
 const rotas = express();
-const { atualizarUsuario,} = require('./../../src/controllers/Public/editarUsuarios');
+const atualizarUsuario = require('./../../src/controllers/Public/editarUsuarios');
 
-const verificaLogin = require('./../../src/intermediarios/verificaLogin');
+const verificaLogin = require('./../../src/intermediarios/verificarLogin');
 
 rotas.get('/', async (request, response) => {
 	response.status(200).json('Funcionando');
 })
 
-app.put("/usuario", verificaLogin, atualizarUsuario);
+rotas.put("/usuario", verificaLogin, atualizarUsuario);
 
 module.exports = rotas
