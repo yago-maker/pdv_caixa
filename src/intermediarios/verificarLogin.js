@@ -1,9 +1,6 @@
 const knex = require('knex')
 const jwt = require('jsonwebtoken')
-
-
 const senhaJwt = process.env.JWTPASS
-
 
 const verificaLogin = async (req, res, next) => {
     const { authorization } = req.headers;
