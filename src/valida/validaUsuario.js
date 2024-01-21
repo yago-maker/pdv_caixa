@@ -22,4 +22,4 @@ const schemaUsuario = joi.object({
     }),
 });
 
-module.exports = valdiaUsuario;
+module.exports = schemaUsuario;

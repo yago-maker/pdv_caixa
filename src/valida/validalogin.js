@@ -17,4 +17,4 @@ const schemaLogin = joi.object({
     }),
 });
 
-module.exports = validalogin;
+module.exports = schemaLogin;

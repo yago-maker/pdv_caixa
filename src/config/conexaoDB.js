@@ -1,4 +1,3 @@
-
 const knex = require('knex')({
 	client: 'pg',
 	connection: {
@@ -8,9 +7,7 @@ const knex = require('knex')({
 		database: process.env.DATABASE,
 		port: process.env.PORTDB,
 	}
-
 });
-
 
 module.exports = knex;
 

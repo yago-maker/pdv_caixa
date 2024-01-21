@@ -1,39 +1,27 @@
 const express = require('express');
-
-const { cadastrarUsuario, loginDoUsuario, detalharPerfil, editaPerfil } = require('./controladores/usuarios');
-const verificaLogin = require('./intermediarios/vericaLogin');
-const { listarCategorias } = require('./controladores/categorias');
-
-
-const { cadastrarUsuario, login } = require('../controladores/usuarios');
-const verificaLogin = require('../intermediarios/verificaLogin');
-
 const rotas = express();
-const atualizarUsuario = require('./../../src/controllers/Public/editarUsuarios');
-const verificaLogin = require('./../../src/intermediarios/verificarLogin');
-const knex = require('../config/conexaoDB');
-const listarCategoria = require('../componentes/listarCategorias');
-const cadastrarUsuario = require('../controllers/public/cadastroDeUsuario')
-rotas.get('/categorias', listarCategoria);
 
-rotas.post('/usuario', cadastrarUsuario);
+//Controladores
+const listarCategoria = require('../controladores/publico/listarCategorias')
+const cadastrar = require('../controladores/publico/cadastroDeUsuario')
+const login = require('../controladores/publico/login')
 
-rotas.post('/login', loginDoUsuario);
+const listarUsuario = require('../controladores/privado/listarUsuario');
+const atualizarUsuario = require('../controladores/privado/editarUsuarios');
 
-rotas.use(verificaLogin);
+//intermediario
+const verificarLogin = require('../intermediarios/verificarLogin');
 
+//joi
+const schemaUsuario = require('../../src/valida/validaUsuario');
+const schemaLogin = require('../../src/valida/validalogin');
 
+rotas.get('/listarCategorias', listarCategoria);
+rotas.post('/usuarios', cadastrar);
+rotas.post('/login', login);
 
-
-rotas.post('/usuarios', cadastrarUsuario)
-rotas.post('/login', login)
-
-
-
-rotas.post('/usuario', cadastrarUsuario)
-
-rotas.put("/usuario", verificaLogin, atualizarUsuario);
-
+rotas.get('/usuario', verificarLogin, listarUsuario);
+rotas.put('/usuario', verificarLogin, atualizarUsuario);
 
 module.exports = rotas;
 

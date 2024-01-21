@@ -1,4 +1,4 @@
-const knex = require('./../../config/conexaoDB')
+const knex = require('../../config/conexaoDB')
 const bcrypt = require('bcrypt');
 
 const atualizarUsuario = async (req, res) => {
@@ -12,7 +12,7 @@ const atualizarUsuario = async (req, res) => {
   }
 
   try {
-    const resultado = await db
+    const resultado = await knex
       .select('*')
       .from('usuarios')
       .where('email', email)
@@ -26,11 +26,12 @@ const atualizarUsuario = async (req, res) => {
 
     const senhaCriptografada = await bcrypt.hash(senha, 10);
 
-    await db('usuarios')
+    await knex('usuarios')
       .where('id', usuarioId)
-      .update({ nome, email, senha: senhaCriptografada });
+      .update({ nome, email, senha: senhaCriptografada })
 
-    res.status(204).end();
+    return res.status(200).json({mensagem: "Usuario atualizado com sucesso"})
+    
   } catch (erro) {
     console.error(erro);
     res.status(500).json({ mensagem: "Erro interno do servidor." });
