@@ -11,6 +11,7 @@ const login = async (req, res) => {
         return res.status(404).json('É obrigatório email e senha')
     }
 
+
     try {
         const usuario = await knex.select().from('usuarios').where({ email: email }).first()
         if (!usuario) {
