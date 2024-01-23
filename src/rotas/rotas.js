@@ -15,13 +15,14 @@ const verificarLogin = require('../intermediarios/verificarLogin');
 //joi
 const schemaUsuario = require('../../src/valida/validaUsuario');
 const schemaLogin = require('../../src/valida/validalogin');
+const validarRequisicao = require('../intermediarios/validarRequisicao');
 
 rotas.get('/listarCategorias', listarCategoria);
-rotas.post('/usuarios', cadastrar);
-rotas.post('/login', login);
+rotas.post('/usuarios', validarRequisicao(schemaUsuario), cadastrar);
+rotas.post('/login', validarRequisicao(schemaLogin), login);
 
 rotas.get('/usuario', verificarLogin, listarUsuario);
-rotas.put('/usuario', verificarLogin, atualizarUsuario);
+rotas.put('/usuario', validarRequisicao(schemaUsuario), verificarLogin, atualizarUsuario);
 
 module.exports = rotas;
 
