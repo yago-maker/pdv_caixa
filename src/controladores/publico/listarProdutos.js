@@ -11,9 +11,9 @@ const listarProdutos = async (req, res) => {
         
         query = query.where('categoria_id', categoria_id);
   
-        const categoriaExist = await knex('categorias').where('id', categoria_id).first();
+        const categoriaExiste = await knex('categorias').where('id', categoria_id).first();
   
-        if (!categoriaExist) {
+        if (!categoriaExiste) {
           return res.status(400).json({ message: 'A categoria informada não existe' });
         }
       }
