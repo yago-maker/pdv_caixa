@@ -9,6 +9,8 @@ const login = require('../controladores/publico/login')
 const listarUsuario = require('../controladores/privado/listarUsuario');
 const atualizarUsuario = require('../controladores/privado/editarUsuarios');
 
+const listarClientes = require('../controladores/privado/listarCliente');
+
 //intermediario
 const verificarLogin = require('../intermediarios/verificarLogin');
 
@@ -23,6 +25,10 @@ rotas.post('/login', validarRequisicao(schemaLogin), login);
 
 rotas.get('/usuario', verificarLogin, listarUsuario);
 rotas.put('/usuario', validarRequisicao(schemaUsuario), verificarLogin, atualizarUsuario);
+
+
+rotas.get('/listarCliente', verificarLogin, listarClientes)
+
 
 module.exports = rotas;
 
