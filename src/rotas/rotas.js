@@ -6,6 +6,9 @@ const listarCategoria = require('../controladores/publico/listarCategorias')
 const cadastrar = require('../controladores/publico/cadastroDeUsuario')
 const login = require('../controladores/publico/login')
 
+const cadastrarProduto = require('../controladores/publico/cadastroProduto')
+const editarProduto = require('../controladores/publico/editarProduto')
+
 const listarUsuario = require('../controladores/privado/listarUsuario');
 const atualizarUsuario = require('../controladores/privado/editarUsuarios');
 
@@ -20,6 +23,9 @@ const validarRequisicao = require('../intermediarios/validarRequisicao');
 rotas.get('/listarCategorias', listarCategoria);
 rotas.post('/usuarios', validarRequisicao(schemaUsuario), cadastrar);
 rotas.post('/login', validarRequisicao(schemaLogin), login);
+
+rotas.post('/produto', validarRequisicao(), cadastrarProduto);
+rotas.put('/produto/:id', validarRequisicao(), editarProduto);
 
 rotas.get('/usuario', verificarLogin, listarUsuario);
 rotas.put('/usuario', validarRequisicao(schemaUsuario), verificarLogin, atualizarUsuario);
