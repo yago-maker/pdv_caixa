@@ -44,6 +44,7 @@ rotas.get('/listarCategorias', listarCategoria);
 rotas.post('/usuarios', validarRequisicao(schemaUsuario), cadastrar);
 rotas.post('/login', validarRequisicao(schemaLogin), login);
 
+rotas.use(verificaLogin);
 
 rotas.get('/usuario', verificarLogin, listarUsuario);
 rotas.put('/usuario', validarRequisicao(schemaUsuario), atualizarUsuario);
