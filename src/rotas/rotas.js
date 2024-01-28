@@ -6,9 +6,17 @@ const listarCategoria = require('../controladores/publico/listarCategorias')
 const cadastrar = require('../controladores/publico/cadastroDeUsuario')
 const login = require('../controladores/publico/login')
 
-const listarUsuario = require('../controladores/privado/listarUsuario');
-const atualizarUsuario = require('../controladores/privado/editarUsuarios');
-const editarDadosDoUsuario = require('../controladores/privado/editarDadosDoCliente');
+const cadastrarProduto = require('../controladores/privado/produtos/cadastroProduto')
+const editarProduto = require('../controladores/privado/produtos/editarProduto')
+const excluirProduto = require('../controladores/privado/produtos/excluirProduto');
+
+const listarUsuario = require('../controladores/privado/usuario/listarUsuario');
+const atualizarUsuario = require('../controladores/privado/usuario/editarUsuarios');
+
+
+const listarProdutos = require('../controladores/privado/produtos/listarProdutos');
+const listarClientes = require('../controladores/privado/clientes/listarCliente');
+
 
 //intermediario
 const verificarLogin = require('../intermediarios/verificarLogin');
@@ -16,11 +24,13 @@ const verificarLogin = require('../intermediarios/verificarLogin');
 //joi
 const schemaUsuario = require('../../src/valida/validaUsuario');
 const schemaLogin = require('../../src/valida/validalogin');
+const schemaProduto = require('../valida/validarProduto');
 const validarRequisicao = require('../intermediarios/validarRequisicao');
 const schemaCliente = require('../valida/validarCliente');
 const verificaLogin = require('../intermediarios/verificarLogin');
 const detalharCliente = require('../controladores/privado/detalharCliente');
 const detalharProduto = require('../controladores/privado/detalharProduto');
+
 
 
 
@@ -33,9 +43,22 @@ rotas.post('/login', validarRequisicao(schemaLogin), login);
 rotas.get('/usuario', verificarLogin, listarUsuario);
 rotas.put('/usuario', validarRequisicao(schemaUsuario), verificarLogin, atualizarUsuario);
 
+
 rotas.put('/cliente/:id', validarRequisicao(schemaCliente), verificarLogin, editarDadosDoUsuario);
 rotas.get('/cliente/:id', verificaLogin, detalharCliente)
 rotas.get('/produto/:id', verificaLogin, detalharProduto)
+
+rotas.get('/produtos', listarProdutos);
+rotas.post('/produto', validarRequisicao(schemaProduto), cadastrarProduto);
+rotas.put('/produto/:id', validarRequisicao(schemaProduto), editarProduto);
+rotas.delete('/produto/:id', excluirProduto);
+
+
+
+rotas.get('/listarCliente', verificarLogin, listarClientes)
+
+
+
 
 
 module.exports = rotas;
