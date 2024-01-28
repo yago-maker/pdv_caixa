@@ -1,5 +1,5 @@
 const knex = require('../../config/conexaoDB')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 
 
 const cadastrar = async (req, res) => {
