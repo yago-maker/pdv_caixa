@@ -12,6 +12,8 @@ const editarProduto = require('../controladores/publico/editarProduto')
 const listarUsuario = require('../controladores/privado/listarUsuario');
 const atualizarUsuario = require('../controladores/privado/editarUsuarios');
 
+
+const listarProdutos = require('../controladores/publico/listarProdutos');
 const listarClientes = require('../controladores/privado/listarCliente');
 
 //intermediario
@@ -22,6 +24,7 @@ const schemaUsuario = require('../../src/valida/validaUsuario');
 const schemaLogin = require('../../src/valida/validalogin');
 const schemaProduto = require('../valida/validarProduto');
 const validarRequisicao = require('../intermediarios/validarRequisicao');
+
 
 rotas.get('/listarCategorias', listarCategoria);
 rotas.post('/usuarios', validarRequisicao(schemaUsuario), cadastrar);
@@ -36,6 +39,8 @@ rotas.put('/usuario', validarRequisicao(schemaUsuario), verificarLogin, atualiza
 
 rotas.get('/listarCliente', verificarLogin, listarClientes)
 
+
+rotas.get('/produto', listarProdutos);
 
 module.exports = rotas;
 
