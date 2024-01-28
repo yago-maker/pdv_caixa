@@ -3,19 +3,23 @@ const rotas = express();
 
 //Controladores
 const listarCategoria = require('../controladores/publico/listarCategorias')
+
 const cadastrar = require('../controladores/publico/cadastroDeUsuario')
 const login = require('../controladores/publico/login')
+const listarUsuario = require('../controladores/privado/usuario/listarUsuario');
+const atualizarUsuario = require('../controladores/privado/usuario/editarUsuarios');
 
 const cadastrarProduto = require('../controladores/privado/produtos/cadastroProduto')
 const editarProduto = require('../controladores/privado/produtos/editarProduto')
 const excluirProduto = require('../controladores/privado/produtos/excluirProduto');
-
-const listarUsuario = require('../controladores/privado/usuario/listarUsuario');
-const atualizarUsuario = require('../controladores/privado/usuario/editarUsuarios');
-
-
 const listarProdutos = require('../controladores/privado/produtos/listarProdutos');
+const detalharProduto = require('../controladores/privado/produtos/detalharProduto')
+
+const cadastrarCliente = require('../../src/controladores/privado/clientes/cadastroDeCliente')
+const editarCliente = require('../../src/controladores/privado/clientes/editarDadosDoCliente')
 const listarClientes = require('../controladores/privado/clientes/listarCliente');
+const detalharCliente = require('../controladores/privado/clientes/detalharCliente');
+
 
 
 //intermediario
@@ -28,8 +32,7 @@ const schemaProduto = require('../valida/validarProduto');
 const validarRequisicao = require('../intermediarios/validarRequisicao');
 const schemaCliente = require('../valida/validarCliente');
 const verificaLogin = require('../intermediarios/verificarLogin');
-const detalharCliente = require('../controladores/privado/detalharCliente');
-const detalharProduto = require('../controladores/privado/detalharProduto');
+
 
 
 
@@ -37,28 +40,25 @@ const detalharProduto = require('../controladores/privado/detalharProduto');
 
 
 rotas.get('/listarCategorias', listarCategoria);
+
 rotas.post('/usuarios', validarRequisicao(schemaUsuario), cadastrar);
 rotas.post('/login', validarRequisicao(schemaLogin), login);
 
+
 rotas.get('/usuario', verificarLogin, listarUsuario);
-rotas.put('/usuario', validarRequisicao(schemaUsuario), verificarLogin, atualizarUsuario);
+rotas.put('/usuario', validarRequisicao(schemaUsuario), atualizarUsuario);
 
-
-rotas.put('/cliente/:id', validarRequisicao(schemaCliente), verificarLogin, editarDadosDoUsuario);
-rotas.get('/cliente/:id', verificaLogin, detalharCliente)
-rotas.get('/produto/:id', verificaLogin, detalharProduto)
 
 rotas.get('/produtos', listarProdutos);
 rotas.post('/produto', validarRequisicao(schemaProduto), cadastrarProduto);
 rotas.put('/produto/:id', validarRequisicao(schemaProduto), editarProduto);
 rotas.delete('/produto/:id', excluirProduto);
+rotas.get('/produto/:id', detalharProduto)
 
-
-
-rotas.get('/listarCliente', verificarLogin, listarClientes)
-
-
-
+rotas.post('/cliente', validarRequisicao(schemaCliente), cadastrarCliente)
+rotas.put('/cliente/:id', validarRequisicao(schemaCliente), editarCliente);
+rotas.get('/cliente/:id', detalharCliente)
+rotas.get('/cliente', listarClientes)
 
 
 module.exports = rotas;

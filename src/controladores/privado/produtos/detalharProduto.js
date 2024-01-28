@@ -1,4 +1,4 @@
-const knex = require('../../config/conexaoDB')
+const knex = require('../../../../src/config/conexaoDB')
 
 const detalharProduto = async (req, res) => {
 

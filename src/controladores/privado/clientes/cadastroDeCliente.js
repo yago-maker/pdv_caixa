@@ -1,6 +1,6 @@
-const knex = require('../../config/conexaoDB')
+const knex = require('../../../config/conexaoDB')
 
-const cadastrarDeCliente = async (req, res) => {
+const cadastrarCliente = async (req, res) => {
     const { nome, email, cpf } = req.body;
 
     if (!nome || !email || !cpf) {
@@ -9,18 +9,17 @@ const cadastrarDeCliente = async (req, res) => {
 
     try {
         const { nome, email, cpf } = req.body;
+        
+        const confirmarEmail = await knex("clientes").where("email", email).select();
 
-        const confirmarEmail = await knex("cliente").where("email", email).select();
-
-        const confirmarCPF = await knex("cliente").where("cpf", cpf).select();
-
+        const confirmarCPF = await knex("clientes").where("cpf", cpf).select();
         if (confirmarEmail.length > 0) {
             return res.status(400).json({ mensagem: "Email já cadastrado!" })
         } else if (confirmarCPF.length > 0) {
             return res.status(400).json({ mensagem: "CPF já cadastrado!" })
         }
 
-        const novoCliente = await knex('cliente').insert({ nome, email, cpf }).returning('*')
+        const novoCliente = await knex('clientes').insert({ nome, email, cpf }).returning('*')
 
         if (novoCliente === 0) {
             return res.status(400).json('Cliente não cadastrado.')
@@ -35,4 +34,4 @@ const cadastrarDeCliente = async (req, res) => {
     }
 };
 
-module.exports = { cadastrarCliente };
+module.exports = cadastrarCliente ;
