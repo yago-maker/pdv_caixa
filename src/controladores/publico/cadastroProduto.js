@@ -5,13 +5,6 @@ const cadastrarProduto = async (req, res) => {
     const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
 
     try {
-        // Validar dados usando Joi
-        const { error } = schemaProduto.validate({ descricao, quantidade_estoque, valor, categoria_id });
-
-        if (error) {
-            return res.status(400).json({ mensagem: error.details[0].message });
-        }
-
         // Verificar se a categoria existe
         const categoriaExiste = await knex.select('id').from('categorias').where({ id: categoria_id }).first();
 

@@ -18,14 +18,15 @@ const verificarLogin = require('../intermediarios/verificarLogin');
 //joi
 const schemaUsuario = require('../../src/valida/validaUsuario');
 const schemaLogin = require('../../src/valida/validalogin');
+const schemaProduto = require('../valida/validarProduto');
 const validarRequisicao = require('../intermediarios/validarRequisicao');
 
 rotas.get('/listarCategorias', listarCategoria);
 rotas.post('/usuarios', validarRequisicao(schemaUsuario), cadastrar);
 rotas.post('/login', validarRequisicao(schemaLogin), login);
 
-rotas.post('/produto', validarRequisicao(), cadastrarProduto);
-rotas.put('/produto/:id', validarRequisicao(), editarProduto);
+rotas.post('/produto',validarRequisicao(schemaProduto), cadastrarProduto);
+rotas.put('/produto/:id', validarRequisicao(schemaProduto), editarProduto);
 
 rotas.get('/usuario', verificarLogin, listarUsuario);
 rotas.put('/usuario', validarRequisicao(schemaUsuario), verificarLogin, atualizarUsuario);
