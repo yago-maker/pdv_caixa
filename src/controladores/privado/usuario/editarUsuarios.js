@@ -1,4 +1,4 @@
-const knex = require('../../config/conexaoDB')
+const knex = require('../../../config/conexaoDB')
 const bcrypt = require('bcrypt');
 
 const atualizarUsuario = async (req, res) => {

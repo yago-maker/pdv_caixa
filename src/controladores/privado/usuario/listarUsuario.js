@@ -1,4 +1,4 @@
-const knex = require('../../config/conexaoDB')
+const knex = require('../../../config/conexaoDB')
 
 const listarUsuario = async (request, response) => {
     const { id } = request.usuario;

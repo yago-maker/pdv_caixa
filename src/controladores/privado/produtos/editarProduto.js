@@ -1,4 +1,4 @@
-const knex = require('../../config/conexaoDB');
+const knex = require('../../../config/conexaoDB');
 const joi = require("joi");
 
 const editarProduto = async (req, res) => {
