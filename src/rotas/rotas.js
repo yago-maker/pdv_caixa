@@ -17,6 +17,7 @@ const atualizarUsuario = require('../controladores/privado/usuario/editarUsuario
 const listarProdutos = require('../controladores/privado/produtos/listarProdutos');
 const listarClientes = require('../controladores/privado/clientes/listarCliente');
 
+
 //intermediario
 const verificarLogin = require('../intermediarios/verificarLogin');
 
@@ -25,6 +26,14 @@ const schemaUsuario = require('../../src/valida/validaUsuario');
 const schemaLogin = require('../../src/valida/validalogin');
 const schemaProduto = require('../valida/validarProduto');
 const validarRequisicao = require('../intermediarios/validarRequisicao');
+const schemaCliente = require('../valida/validarCliente');
+const verificaLogin = require('../intermediarios/verificarLogin');
+const detalharCliente = require('../controladores/privado/detalharCliente');
+const detalharProduto = require('../controladores/privado/detalharProduto');
+
+
+
+
 
 
 rotas.get('/listarCategorias', listarCategoria);
@@ -34,6 +43,11 @@ rotas.post('/login', validarRequisicao(schemaLogin), login);
 rotas.get('/usuario', verificarLogin, listarUsuario);
 rotas.put('/usuario', validarRequisicao(schemaUsuario), verificarLogin, atualizarUsuario);
 
+
+rotas.put('/cliente/:id', validarRequisicao(schemaCliente), verificarLogin, editarDadosDoUsuario);
+rotas.get('/cliente/:id', verificaLogin, detalharCliente)
+rotas.get('/produto/:id', verificaLogin, detalharProduto)
+
 rotas.get('/produtos', listarProdutos);
 rotas.post('/produto', validarRequisicao(schemaProduto), cadastrarProduto);
 rotas.put('/produto/:id', validarRequisicao(schemaProduto), editarProduto);
@@ -42,6 +56,7 @@ rotas.delete('/produto/:id', excluirProduto);
 
 
 rotas.get('/listarCliente', verificarLogin, listarClientes)
+
 
 
 
