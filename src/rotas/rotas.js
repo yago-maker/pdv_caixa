@@ -12,6 +12,8 @@ const editarProduto = require('../controladores/publico/editarProduto')
 const listarUsuario = require('../controladores/privado/listarUsuario');
 const atualizarUsuario = require('../controladores/privado/editarUsuarios');
 
+const listarClientes = require('../controladores/privado/listarCliente');
+
 //intermediario
 const verificarLogin = require('../intermediarios/verificarLogin');
 
@@ -30,6 +32,10 @@ rotas.put('/produto/:id', validarRequisicao(schemaProduto), editarProduto);
 
 rotas.get('/usuario', verificarLogin, listarUsuario);
 rotas.put('/usuario', validarRequisicao(schemaUsuario), verificarLogin, atualizarUsuario);
+
+
+rotas.get('/listarCliente', verificarLogin, listarClientes)
+
 
 module.exports = rotas;
 
