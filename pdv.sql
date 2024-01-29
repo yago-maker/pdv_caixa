@@ -3,13 +3,12 @@ create table usuarios (
 	nome varchar(255) not null,
 	email varchar(255) not null unique,
 	senha varchar(255) not null
-)
+);
 
 create table categorias (
 	id serial primary key,
 	descricao varchar(255) not null
-)
-
+);
 
 insert into categorias (descricao)
 values
@@ -30,7 +29,7 @@ create table produtos3 (
     valor int,
     categoria_id int, 
   	foreign key(categoria_id) references categorias(id)
-)
+);
 
 create table cliente (
     id serial primary key,
@@ -43,4 +42,25 @@ create table cliente (
     bairro varchar(255),
     cidade varchar(255),
     estado varchar(255)
-)
+);
+
+create table pedidos (
+    id serial primary key,
+    cliente_id int,
+    foreign key (cliente_id) references clientes(id),
+    observacao varchar(255),
+    valor_total int
+);
+  
+  
+create table pedido_produtos(
+	id serial primary key,
+  pedido_id int,
+  foreign key (pedido_id) references pedidos(id),
+  produto_id int,
+  foreign key (produto_id) references produtos(id),
+  quantidade_produto int,
+  valor_produto int
+);
+
+alter table produtos add column produto_imagem varchar(255);
