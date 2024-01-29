@@ -23,35 +23,24 @@ values
 ('Bebê'),
 ('Games')
 
--- Tabela produtos
-CREATE TABLE produtos (
-    id SERIAL PRIMARY KEY,
-    descricao VARCHAR(255) NOT NULL,
-    quantidade_estoque INTEGER NOT NULL,
-    valor DECIMAL(10, 2) NOT NULL,
-    categoria_id INTEGER,
-    FOREIGN KEY (categoria_id) REFERENCES categorias(id)
-);
+create table produtos3 (
+    id serial primary key,
+    descricao varchar(255),
+    quantidade_estoque int,
+    valor int,
+    categoria_id int, 
+  	foreign key(categoria_id) references categorias(id)
+)
 
--- Tabela clientes
-CREATE TABLE clientes (
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    cpf VARCHAR(14) UNIQUE NOT NULL,
-    cep VARCHAR(10),
-    rua VARCHAR(255),
-    numero VARCHAR(10),
-    bairro VARCHAR(255),
-    cidade VARCHAR(255),
-    estado VARCHAR(2)
-);
-
-
-
-
-
-
-
-
-
+create table cliente (
+    id serial primary key,
+    nome varchar(255),
+    email varchar(255),
+    cpf varchar(255),
+    cep int,
+    rua varchar(255),
+    numero int,
+    bairro varchar(255),
+    cidade varchar(255),
+    estado varchar(255)
+)
