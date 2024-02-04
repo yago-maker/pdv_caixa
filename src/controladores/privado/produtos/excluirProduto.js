@@ -9,10 +9,10 @@ const excluirProduto = async (req, res) => {
             id: joi.number().require()
         });
 
-        const validação = schema.validate({ id });
+        const validacao = schema.validate({ id });
 
-        if (validação.error) {
-            return res.status(400).json({ erro: validação.error.details[0].message });
+        if (validacao.error) {
+            return res.status(400).json({ erro: validacao.error.details[0].message });
         }
 
         //realiza a verificação do produto antes da exclusão
