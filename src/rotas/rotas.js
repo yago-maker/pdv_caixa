@@ -59,13 +59,13 @@ rotas.put('/produto/:id', validarRequisicao(schemaProduto), editarProduto);
 rotas.delete('/produto/:id', excluirProduto);
 rotas.get('/produto/:id', detalharProduto)
 
-rotas.post('/pedido', validarRequisicao(schemaPedido), cadastrarPedido);
 
 rotas.post('/cliente', validarRequisicao(schemaCliente), cadastrarCliente)
 rotas.put('/cliente/:id', validarRequisicao(schemaCliente), editarCliente);
 rotas.get('/cliente/:id', detalharCliente)
 rotas.get('/cliente', listarClientes)
 
+rotas.post('/pedido', validarRequisicao(schemaPedido), cadastrarPedido);
 rotas.get('/pedido', listarPedidos)
 
 module.exports = rotas;
