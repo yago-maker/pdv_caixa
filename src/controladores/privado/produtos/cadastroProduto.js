@@ -14,10 +14,11 @@ const cadastrarProduto = async (req, res) => {
         }
         
         // Upload da imagem
+        console.log(file)
         if(file){
             const uploadImagem = await s3.upload({
                 Bucket: process.env.BB_KEY_NAME,
-                Key: descricao,
+                Key: file.originalname,
                 Body: file.buffer,
                 ContentType: file.mimetype
             }).promise()
