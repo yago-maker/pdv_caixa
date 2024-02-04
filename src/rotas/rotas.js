@@ -1,6 +1,8 @@
 const express = require('express');
 const rotas = express();
 
+const multer = require('../config/multer');
+
 //Controladores
 const listarCategoria = require('../controladores/publico/listarCategorias')
 
@@ -40,7 +42,6 @@ const verificaLogin = require('../intermediarios/verificarLogin');
 const schemaPedido = require('../valida/validarPedido')
 
 
-
 rotas.get('/listarCategorias', listarCategoria);
 
 rotas.post('/usuarios', validarRequisicao(schemaUsuario), cadastrar);
@@ -53,7 +54,7 @@ rotas.put('/usuario', validarRequisicao(schemaUsuario), atualizarUsuario);
 
 
 rotas.get('/produtos', listarProdutos);
-rotas.post('/produto', validarRequisicao(schemaProduto), cadastrarProduto);
+rotas.post('/produto', multer.single('imagem_produto') ,validarRequisicao(schemaProduto), cadastrarProduto);
 rotas.put('/produto/:id', validarRequisicao(schemaProduto), editarProduto);
 rotas.delete('/produto/:id', excluirProduto);
 rotas.get('/produto/:id', detalharProduto)
