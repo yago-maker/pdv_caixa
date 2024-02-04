@@ -15,6 +15,10 @@ const excluirProduto = require('../controladores/privado/produtos/excluirProduto
 const listarProdutos = require('../controladores/privado/produtos/listarProdutos');
 const detalharProduto = require('../controladores/privado/produtos/detalharProduto')
 
+const validarPedido = require('../valida/validarPedido')
+
+const cadastrarPedido = require('../pedido/cadastraPedido')
+
 const cadastrarCliente = require('../../src/controladores/privado/clientes/cadastroDeCliente')
 const editarCliente = require('../../src/controladores/privado/clientes/editarDadosDoCliente')
 const listarClientes = require('../controladores/privado/clientes/listarCliente');
@@ -32,10 +36,7 @@ const schemaProduto = require('../valida/validarProduto');
 const validarRequisicao = require('../intermediarios/validarRequisicao');
 const schemaCliente = require('../valida/validarCliente');
 const verificaLogin = require('../intermediarios/verificarLogin');
-
-
-
-
+const schemaPedido = require('../valida/validarPedido')
 
 
 
@@ -55,6 +56,8 @@ rotas.post('/produto', validarRequisicao(schemaProduto), cadastrarProduto);
 rotas.put('/produto/:id', validarRequisicao(schemaProduto), editarProduto);
 rotas.delete('/produto/:id', excluirProduto);
 rotas.get('/produto/:id', detalharProduto)
+
+rotas.post('/pedido', validarRequisicao(schemaPedido), cadastrarPedido);
 
 rotas.post('/cliente', validarRequisicao(schemaCliente), cadastrarCliente)
 rotas.put('/cliente/:id', validarRequisicao(schemaCliente), editarCliente);

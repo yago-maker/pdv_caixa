@@ -34,6 +34,8 @@ const login = async (req, res) => {
         })
 
     } catch (error) {
+        console.log(error.message);
+        
         return res.status(404).json(error)
     }
 

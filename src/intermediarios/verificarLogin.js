@@ -11,6 +11,8 @@ const verificaLogin = async (req, res, next) => {
 
     const token = authorization.split(' ')[1];
 
+    
+
     try {
         const { id } = jwt.verify(token, senhaJwt);
 
@@ -26,6 +28,8 @@ const verificaLogin = async (req, res, next) => {
 
         next();
     } catch (error) {
+          console.log(error.message);
+          
         return res.status(401).json({ mensagem: 'Não está autorizado' });
     }
 };
