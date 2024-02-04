@@ -69,7 +69,7 @@ const cadastrarPedido = async (req, res) => {
         }
 
         // Enviar e-mail para o cliente
-        // enviarEmailCliente(clienteExiste.nome, pedido_id);
+        enviarEmailCliente(clienteExiste.nome, pedido_id);
 
         return res.status(201).json({ mensagem: "Pedido cadastrado com sucesso." });
 
