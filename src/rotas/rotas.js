@@ -24,7 +24,8 @@ const editarCliente = require('../../src/controladores/privado/clientes/editarDa
 const listarClientes = require('../controladores/privado/clientes/listarCliente');
 const detalharCliente = require('../controladores/privado/clientes/detalharCliente');
 
-
+// pedidos
+const listarPedidos = require('../controladores/privado/pedidos/listarPedidos');
 
 //intermediario
 const verificarLogin = require('../intermediarios/verificarLogin');
@@ -64,6 +65,7 @@ rotas.put('/cliente/:id', validarRequisicao(schemaCliente), editarCliente);
 rotas.get('/cliente/:id', detalharCliente)
 rotas.get('/cliente', listarClientes)
 
+rotas.get('/pedido', listarPedidos)
 
 module.exports = rotas;
 
