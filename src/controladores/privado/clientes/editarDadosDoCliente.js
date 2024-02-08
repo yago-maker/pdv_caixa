@@ -9,8 +9,8 @@ const editarDadosDoUsuario = async (req, res) => {
 
         const clienteIdExiste = await knex('clientes').where({ id }).returning('*')
 
-        if (!clienteIdExiste.length < 0) {
-            return res.status(404).json("Cliente não existe.")
+        if (clienteIdExiste.length === 0) {
+            return res.status(404).json({ mensagem: "Cliente não existe." });
         }
         const verificarEmail = await knex('clientes').where({ email })
 
@@ -29,6 +29,7 @@ const editarDadosDoUsuario = async (req, res) => {
         return res.status(200).json(editarCliente)
 
     } catch (error) {
+        
         return res.status(500).json("Erro interno do servidor.")
     }
 }
