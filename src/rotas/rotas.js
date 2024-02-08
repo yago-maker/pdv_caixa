@@ -39,7 +39,12 @@ const schemaProduto = require('../valida/validarProduto');
 const validarRequisicao = require('../intermediarios/validarRequisicao');
 const schemaCliente = require('../valida/validarCliente');
 const verificaLogin = require('../intermediarios/verificarLogin');
+
+const listarPedidos = require('../controladores/privado/pedidos/listarPedidos');
+const exclusaoDoProduto = require('../controladores/privado/produtos/exclusaoDoProduto');
+
 const schemaPedido = require('../valida/validarPedido')
+
 
 
 rotas.get('/listarCategorias', listarCategoria);
@@ -56,7 +61,7 @@ rotas.put('/usuario', validarRequisicao(schemaUsuario), atualizarUsuario);
 rotas.get('/produtos', listarProdutos);
 rotas.post('/produto', multer.single('imagem_produto') ,validarRequisicao(schemaProduto), cadastrarProduto);
 rotas.put('/produto/:id', validarRequisicao(schemaProduto), editarProduto);
-rotas.delete('/produto/:id', excluirProduto);
+rotas.delete('/produto/:id', exclusaoDoProduto);
 rotas.get('/produto/:id', detalharProduto)
 
 

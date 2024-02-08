@@ -1,9 +1,27 @@
-const knex = require('../../../config/conexaoDB');
-const joi = require("joi");
+const knex = require('../../../config/conexaoDB')
 
-const excluirProduto = async (req, res) => {
+const exclusaoDoProduto = async (req, res) => {
+    const { id } = req.params
+
     try {
         const { id } = req.body
+
+
+        const produtoExiste = await knex('produtos').where({ id }).first()
+
+        if (!produtoExiste) {
+            return res.status(400).json({ message: "O produto não existe." })
+        }
+
+        const pedidoProdutoExiste = await knex('pedido_produtos').where({ produto_id: id }).first()
+
+        if (pedidoProdutoExiste) {
+            return res.status(404).json({ message: "O produto está registrado em um pedido e nao pode ser excluido." })
+        }
+
+        const excluirProduto = await knex('produtos').where({ id }).del();
+
+        return res.status(200).json({ message: "Produto excluído com sucesso!" })
 
         const schema = joi.object({
             id: joi.number().require()
@@ -28,8 +46,9 @@ const excluirProduto = async (req, res) => {
         return res.status(200).json({ messagem: 'Produto excluido com sucesso!' })
 
     } catch (error) {
-        return res.status(500).json({ error: 'Erro ao excluir o produto' });
+        res.status(500).json({ message: 'Erro interno do servidor' });
     }
-};
 
-module.exports = excluirProduto;
+}
+
+module.exports = exclusaoDoProduto
