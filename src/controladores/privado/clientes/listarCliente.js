@@ -1,12 +1,14 @@
 const knex = require('../../../config/conexaoDB');
+const { internServerErrorMsg } = require('../../../alerts/alerts');
 
-const listarClientes = async (request, response ) => {
+const listAllClients = async (req, res ) => {
     try {
+        
         const clientes = await knex.select('*').from('clientes');
-        return response.status(200).json(clientes);
+        return res.status(200).json(clientes);
     } catch (error) {
-        return response.status(500).json(error)
+        return res.status(500).json({mensagem: internServerErrorMsg()})
     }
 }
 
-module.exports = listarClientes;
+module.exports = listAllClients;

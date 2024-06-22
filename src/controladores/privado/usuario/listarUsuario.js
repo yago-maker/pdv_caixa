@@ -1,16 +1,13 @@
-const knex = require('../../../config/conexaoDB')
 
-const listarUsuario = async (request, response) => {
-    const { id } = request.usuario;
+const {internServerErrorMsg} = require("../../../alerts/alerts")
 
+const getUser = async (req, res) => {
     try {
-        const usuario = await knex.select('*').from('usuarios').where('id', id);
-
-        return response.status(200).json(usuario);
+        return  res.status(200).json(req.usuario)
     } catch (error) {
-        return response.status(500).json(error);
+        console.log(error);
+        return res.status(500).json({mensagem: internServerErrorMsg()})
     }
-
 }
 
-module.exports = listarUsuario;
+module.exports = getUser ;

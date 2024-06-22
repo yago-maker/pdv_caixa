@@ -7,15 +7,16 @@ const schemaProduto = joi.object({
     }),
     quantidade_estoque: joi.number().integer().required().messages({
         "any.required": "O campo quantidade_estoque é obrigatório",
-        "number.integer": "O campo quantidade_estoque deve ser um número inteiro",
+        'number.negative': 'O campo quantidade_estoque não pode ser negativo.'
     }),
-    valor: joi.number().required().messages({
-        "any.required": "O campo valor é obrigatório",
+    valor: joi.number().positive().required().messages({
+        'any.required': 'O campo valor é obrigatório.',
+        'number.negative': 'O campo valor não pode ser negativo.'
     }),
-    categoria_id: joi.number().integer().required().messages({
-        "any.required": "O campo categoria_id é obrigatório",
-        "number.integer": "O campo categoria_id deve ser um número inteiro",
-    }),
+    categoria_id: joi.number().positive().required().messages({
+        'any.required': 'O campo categoria_id é obrigatório.',
+        'number.negative': 'O campo categoria_id não pode ser negativo.'
+    })
 });
 
 

@@ -2,8 +2,7 @@ const nodemailer = require('nodemailer');
 
 // Função para enviar e-mail para o cliente
 const enviarEmailCliente = (nomeCliente, pedido) => {
-    
-    const transporter = nodemailer.createTransport({
+    const transport = nodemailer.createTransport({
         service: 'gmail',
         auth: {
             user: process.env.EMAIL_USER,
@@ -20,7 +19,7 @@ const enviarEmailCliente = (nomeCliente, pedido) => {
     };
 
     // Enviar e-mail
-    transporter.sendMail(mailOptions, (error, info) => {
+    transport.sendMail(mailOptions, (error, info) => {
         if (error) {
             console.error('Erro ao enviar e-mail:', error.message);
         } else {
@@ -29,4 +28,4 @@ const enviarEmailCliente = (nomeCliente, pedido) => {
     });
 }
 
-module.exports = enviarEmailCliente;
+module.exports = enviarEmailCliente; // Corrigido o nome da função exportada

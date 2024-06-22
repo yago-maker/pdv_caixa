@@ -22,7 +22,7 @@ values
 ('Bebê'),
 ('Games')
 
-create table produtos3 (
+create table produtos (
     id serial primary key,
     descricao varchar(255),
     quantidade_estoque int,
@@ -47,7 +47,7 @@ create table cliente (
 create table pedidos (
     id serial primary key,
     cliente_id int,
-    foreign key (cliente_id) references clientes(id),
+    foreign key (cliente_id) references cliente(id),
     observacao varchar(255),
     valor_total int
 );

@@ -1,37 +1,57 @@
-const knex = require('../../../config/conexaoDB')
+const knex = require('../../../config/conexaoDB');
+const { notFoundMsg, alreadyExistsErrorMsg, successEditMsg, internServerErrorMsg } = require('../../../alerts/alerts');
 
-
-const editarDadosDoUsuario = async (req, res) => {
-    const { id } = req.params
-    const { nome, email, cpf } = req.body
+const updateClient = async (req, res) => {
+    const { id } = req.params; // Extraímos o id dos params
+    const { nome, email, cpf, cep, rua, numero, bairro, cidade, estado } = req.body; // Extraímos os outros campos do body
 
     try {
+        // Verifica se o cliente existe
+        const existClient = await knex("clientes").where({ id }).first();
 
-        const clienteIdExiste = await knex('clientes').where({ id }).returning('*')
-
-        if (clienteIdExiste.length === 0) {
-            return res.status(404).json({ mensagem: "Cliente não existe." });
-        }
-        const verificarEmail = await knex('clientes').where({ email })
-
-
-        if (verificarEmail.length > 0 && verificarEmail[0].email !== req.body.email) {
-            return res.status(404).json({ mensagem: "O e-mail informado já está sendo utilizado por outro usuário." })
+        if (!existClient) {
+            return res.status(404).json({ mensagem: notFoundMsg() });
         }
 
-        const verificarCpf = await knex('clientes').where({ cpf })
+        const verifiedEmail = email.toLowerCase();
 
-        if (verificarCpf.length > 0 && verificarCpf[0].cpf !== req.body.cpf) {
-            return res.status(404).json({ mensagem: "O Cpf informado já está sendo utilizado por outro usuário." })
+        // Função para validar se já existe um dado no banco
+        const validDataExists = async (register, data, id) => {
+            const dataExists = await knex("clientes")
+                .where(register, '=', data)
+                .whereNot({ id })
+                .first();
+                
+            return !!dataExists; // Retorna true se existir, caso contrário false
         }
 
-        const editarCliente = await knex('clientes').where({ id }).update({ nome, email, cpf }).returning('*')
-        return res.status(200).json(editarCliente)
-
-    } catch (error) {
+        const cpfExists = await validDataExists('cpf', cpf, id);
+        const emailExists = await validDataExists('email', verifiedEmail, id);
         
-        return res.status(500).json("Erro interno do servidor.")
+        if (cpfExists || emailExists) {
+            return res.status(400).json({ mensagem: `Email ou CPF ${alreadyExistsErrorMsg()}` });
+        }
+
+        // Atualiza os dados do cliente
+        await knex("clientes")
+            .where({ id })
+            .update({
+                nome,
+                email: verifiedEmail,
+                cpf,
+                cep,
+                rua,
+                numero,
+                bairro,
+                cidade,
+                estado
+            });
+
+        return res.status(200).json({ mensagem: successEditMsg() });
+    } catch (error) {
+    
+        return res.status(500).json({ mensagem: internServerErrorMsg() });
     }
 }
 
-module.exports = editarDadosDoUsuario
+module.exports = updateClient;

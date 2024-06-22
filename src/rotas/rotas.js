@@ -1,77 +1,68 @@
 const express = require('express');
-const rotas = express();
+const rotas = express(); // Criando uma instância do Express para rotas
 
-const multer = require('../config/multer');
+const multer = require('../config/multer'); // Importando configuração do multer para upload de arquivos
 
-//Controladores
-const listarCategoria = require('../controladores/publico/listarCategorias')
-
-const cadastrar = require('../controladores/publico/cadastroDeUsuario')
-const login = require('../controladores/publico/login')
-const listarUsuario = require('../controladores/privado/usuario/listarUsuario');
+// Importando controladores
+const listarCategoria = require('../controladores/publico/listarCategorias');
+// Usuarios
+const registerUser = require('../controladores/publico/cadastroDeUsuario');
+const login = require('../controladores/publico/login');
+const getUser = require('../controladores/privado/usuario/listarUsuario');
 const atualizarUsuario = require('../controladores/privado/usuario/editarUsuarios');
-
-const cadastrarProduto = require('../controladores/privado/produtos/cadastroProduto')
-const editarProduto = require('../controladores/privado/produtos/editarProduto')
+// Produto
+const cadastrarProduto = require('../controladores/privado/produtos/cadastroProduto');
+const updateProducts= require('../controladores/privado/produtos/editarProduto');
 const excluirProduto = require('../controladores/privado/produtos/excluirProduto');
 const listarProdutos = require('../controladores/privado/produtos/listarProdutos');
-const detalharProduto = require('../controladores/privado/produtos/detalharProduto')
+const detalharProduto = require('../controladores/privado/produtos/detalharProduto');
 
-const validarPedido = require('../valida/validarPedido')
+// Cliente
+const registerClient = require('../controladores/privado/clientes/cadastroDeCliente');
+const updateClient = require('../controladores/privado/clientes/editarDadosDoCliente');
+const listAllClients = require('../controladores/privado/clientes/listarCliente');
+const getClient = require('../controladores/privado/clientes/detalharCliente');
 
-const cadastrarPedido = require('../pedido/cadastraPedido')
+//pedidos
+const listOrder = require('../controladores/privado/pedidos/listarPedidos');
+const orderRegister = require('../controladores/privado/pedidos/cadastraPedido');
 
-const cadastrarCliente = require('../../src/controladores/privado/clientes/cadastroDeCliente')
-const editarCliente = require('../../src/controladores/privado/clientes/editarDadosDoCliente')
-const listarClientes = require('../controladores/privado/clientes/listarCliente');
-const detalharCliente = require('../controladores/privado/clientes/detalharCliente');
 
-// pedidos
-const listarPedidos = require('../controladores/privado/pedidos/listarPedidos');
-
-//intermediario
-const verificarLogin = require('../intermediarios/verificarLogin');
-
-//joi
+// Importando validadores Joi
 const schemaUsuario = require('../../src/valida/validaUsuario');
 const schemaLogin = require('../../src/valida/validalogin');
 const schemaProduto = require('../valida/validarProduto');
-const validarRequisicao = require('../intermediarios/validarRequisicao');
 const schemaCliente = require('../valida/validarCliente');
-const verificaLogin = require('../intermediarios/verificarLogin');
+const schemaPedido = require('../valida/validarPedido');
 
-const listarPedidos = require('../controladores/privado/pedidos/listarPedidos');
-const exclusaoDoProduto = require('../controladores/privado/produtos/exclusaoDoProduto');
-
-const schemaPedido = require('../valida/validarPedido')
-
+// Importando intermediários e validações
+const validarRequisicao = require('../intermediarios/validarRequisicao');
+const verificarLogin = require('../intermediarios/verificarLogin');
 
 
+// Definição das rotas
 rotas.get('/listarCategorias', listarCategoria);
 
-rotas.post('/usuarios', validarRequisicao(schemaUsuario), cadastrar);
+rotas.post('/usuarios', validarRequisicao(schemaUsuario), registerUser);
 rotas.post('/login', validarRequisicao(schemaLogin), login);
 
-rotas.use(verificaLogin);
+rotas.use(verificarLogin); // Middleware para verificar login em todas as rotas abaixo desta linha
 
-rotas.get('/usuario', verificarLogin, listarUsuario);
+rotas.get('/usuario', getUser);
 rotas.put('/usuario', validarRequisicao(schemaUsuario), atualizarUsuario);
 
-
 rotas.get('/produtos', listarProdutos);
-rotas.post('/produto', multer.single('imagem_produto') ,validarRequisicao(schemaProduto), cadastrarProduto);
-rotas.put('/produto/:id', validarRequisicao(schemaProduto), editarProduto);
-rotas.delete('/produto/:id', exclusaoDoProduto);
-rotas.get('/produto/:id', detalharProduto)
+rotas.post('/produto', multer.single('imagem_produto'), validarRequisicao(schemaProduto), cadastrarProduto);
+rotas.put('/produto/:id', validarRequisicao(schemaProduto), updateProducts);
+rotas.delete('/produto/:id', excluirProduto);
+rotas.get('/produto/:id', detalharProduto);
 
+rotas.post('/cliente', validarRequisicao(schemaCliente), registerClient);
+rotas.put('/cliente/:id', validarRequisicao(schemaCliente), updateClient);
+rotas.get('/cliente/:id', getClient);
+rotas.get('/cliente', listAllClients);
 
-rotas.post('/cliente', validarRequisicao(schemaCliente), cadastrarCliente)
-rotas.put('/cliente/:id', validarRequisicao(schemaCliente), editarCliente);
-rotas.get('/cliente/:id', detalharCliente)
-rotas.get('/cliente', listarClientes)
-
-rotas.post('/pedido', validarRequisicao(schemaPedido), cadastrarPedido);
-rotas.get('/pedido', listarPedidos)
+rotas.post('/pedido', validarRequisicao(schemaPedido), orderRegister);
+rotas.get('/pedido', listOrder);
 
 module.exports = rotas;
-

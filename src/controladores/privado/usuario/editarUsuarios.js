@@ -1,6 +1,11 @@
 const knex = require('../../../config/conexaoDB')
 const bcrypt = require('bcrypt');
 
+const {
+  successRegMsg,
+  internServerErrorMsg
+} = require('../../../alerts/alerts')
+
 const atualizarUsuario = async (req, res) => {
   const { nome, email, senha } = req.body;
   const usuarioId = req.usuario.id;
@@ -30,11 +35,11 @@ const atualizarUsuario = async (req, res) => {
       .where('id', usuarioId)
       .update({ nome, email, senha: senhaCriptografada })
 
-    return res.status(200).json({mensagem: "Usuario atualizado com sucesso"})
+    return res.status(200).json({mensagem: successRegMsg()})
     
   } catch (erro) {
     
-    res.status(500).json({ mensagem: "Erro interno do servidor." });
+    res.status(500).json({ mensagem: internServerErrorMsg() });
   }
 }
 

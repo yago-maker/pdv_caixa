@@ -24,8 +24,8 @@ const login = async (req, res) => {
             return res.status(404).json('Email ou senha não confere')
         }
 
-        const token = jwt.sign({ id: usuario.id }, senhaJWT, { expiresIn: '8h' })
-
+        const token = jwt.sign({ id: usuario.id }, process.env.JWTPASS, { expiresIn: '8h' })
+    
         const { senha: _, ...dadosUsuario } = usuario
 
         return res.status(200).json({
@@ -35,8 +35,8 @@ const login = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
-        
-        return res.status(404).json(error)
+      
+        return res.status(500).json({ mensage: 'Server error'})
     }
 
 }
